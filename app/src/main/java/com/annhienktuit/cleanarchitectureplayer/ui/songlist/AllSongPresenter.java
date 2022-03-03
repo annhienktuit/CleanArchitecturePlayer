@@ -3,7 +3,6 @@ package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
 import android.util.Log;
 
 import com.annhienktuit.domain.models.Song;
-import com.annhienktuit.domain.models.SongList;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;

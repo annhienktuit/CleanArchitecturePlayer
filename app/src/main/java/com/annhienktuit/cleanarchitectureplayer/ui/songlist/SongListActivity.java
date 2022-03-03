@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +18,7 @@ import com.annhienktuit.cleanarchitectureplayer.R;
 import com.annhienktuit.cleanarchitectureplayer.ServiceLocator;
 import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerActivity;
 import com.annhienktuit.domain.models.Song;
-import com.annhienktuit.domain.models.SongList;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
-import com.google.android.exoplayer2.Player;
 
 import java.util.List;
 

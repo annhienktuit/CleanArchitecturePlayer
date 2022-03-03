@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.annhienktuit.cleanarchitectureplayer.R;
 import com.annhienktuit.domain.models.Song;
-import com.annhienktuit.domain.models.SongList;
 
 import java.util.List;
 

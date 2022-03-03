@@ -2,7 +2,6 @@ package com.annhienktuit.domain.usecases;
 
 import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.models.Song;
-import com.annhienktuit.domain.models.SongList;
 
 import java.util.List;
 

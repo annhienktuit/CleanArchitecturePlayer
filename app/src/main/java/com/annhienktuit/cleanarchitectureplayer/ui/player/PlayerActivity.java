@@ -1,11 +1,11 @@
 package com.annhienktuit.cleanarchitectureplayer.ui.player;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.annhienktuit.cleanarchitectureplayer.DefaultServiceLocator;
 import com.annhienktuit.cleanarchitectureplayer.R;
