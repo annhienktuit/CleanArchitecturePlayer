@@ -21,7 +21,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     private com.google.android.exoplayer2.ui.PlayerView playerView;
 
-    private PlayerPresenter presenter;
+    private PlayerPresenterInterface presenter;
 
     private ExoPlayer exoPlayer;
 

@@ -27,7 +27,7 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
     private RecyclerView recyclerViewSongList;
     private TextView tvNoResult;
     private SongListAdapter adapter;
-    private SongListPresenter presenter;
+    private SongListPresenterInterface presenter;
 
 
     @Override
