@@ -14,15 +14,14 @@ import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.PlayerView;
 
-public class PlayerActivity extends AppCompatActivity implements ExoPlayerView{
+public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     public static final String SONG_ID = "id";
 
-    private PlayerView playerView;
+    private com.google.android.exoplayer2.ui.PlayerView playerView;
 
-    private ExoPlayerPresenter presenter;
+    private PlayerPresenter presenter;
 
     private ExoPlayer exoPlayer;
 
@@ -42,7 +41,7 @@ public class PlayerActivity extends AppCompatActivity implements ExoPlayerView{
 
         playerView.setPlayer(exoPlayer);
 
-        presenter = new ExoPlayerPresenter(
+        presenter = new PlayerPresenter(
                 exoPlayer,
                 this,
                 new GetSongUseCase(serviceLocator.getSongDataSource()),
@@ -73,5 +72,11 @@ public class PlayerActivity extends AppCompatActivity implements ExoPlayerView{
     @Override
     public void showErrorToast(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed(){
+        presenter.releasePlayer();
+        super.onBackPressed();
     }
 }

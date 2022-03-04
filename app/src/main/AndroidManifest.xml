@@ -13,7 +13,7 @@
             android:name=".ui.player.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.songlist.SongListActivity"
+            android:name=".ui.songlist.SongListListActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

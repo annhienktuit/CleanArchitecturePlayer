@@ -8,19 +8,20 @@ import com.annhienktuit.domain.usecases.GetSongUseCase;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-public class AllSongPresenter {
-    private AllSongView allSongView;
+public class SongListPresenter implements SongListPresenterInterface {
+    private SongListView songListView;
     private GetSongUseCase getSongUseCase;
     private ExecutorService ioExecutorService;
     private ExecutorService mainExecutorService;
 
-    public AllSongPresenter(AllSongView allSongView, GetSongUseCase getSongUseCase, ExecutorService ioExecutorService, ExecutorService mainExecutorService) {
-        this.allSongView = allSongView;
+    public SongListPresenter(SongListView songListView, GetSongUseCase getSongUseCase, ExecutorService ioExecutorService, ExecutorService mainExecutorService) {
+        this.songListView = songListView;
         this.getSongUseCase = getSongUseCase;
         this.ioExecutorService = ioExecutorService;
         this.mainExecutorService = mainExecutorService;
     }
 
+    @Override
     public void loadSong(){
         mainExecutorService.execute(() -> {
             ioExecutorService.execute(() -> {
@@ -28,16 +29,16 @@ public class AllSongPresenter {
                     List<Song> songList = getSongUseCase.executeAll();
                     if(songList != null){
                         mainExecutorService.execute(() -> {
-                            allSongView.showSongList(songList);
+                            songListView.showSongList(songList);
                         });
                     }
                     else {
-                        allSongView.showNoResultText();
+                        songListView.showNoResultText();
                         Log.e("Nhiennha ", "List song return null");
                     }
                 }
                 catch (Exception e){
-                    allSongView.showErrorToast("Error while getting data from API");
+                    songListView.showErrorToast("Error while getting data from API");
                     e.printStackTrace();
                 }
             });
@@ -45,9 +46,10 @@ public class AllSongPresenter {
         });
     }
 
+    @Override
     public void onSongItemClick(Song song){
         mainExecutorService.execute(() -> {
-            allSongView.openSong(song);
+            songListView.openSong(song);
         });
     }
 

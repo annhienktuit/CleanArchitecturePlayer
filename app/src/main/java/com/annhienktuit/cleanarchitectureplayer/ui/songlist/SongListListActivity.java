@@ -22,12 +22,12 @@ import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;
 
-public class SongListActivity extends AppCompatActivity implements AllSongView{
+public class SongListListActivity extends AppCompatActivity implements SongListView {
 
     private RecyclerView recyclerViewSongList;
     private TextView tvNoResult;
     private SongListAdapter adapter;
-    private AllSongPresenter presenter;
+    private SongListPresenter presenter;
 
 
     @Override
@@ -36,7 +36,7 @@ public class SongListActivity extends AppCompatActivity implements AllSongView{
         setContentView(R.layout.activity_main);
         attachView();
         ServiceLocator serviceLocator = DefaultServiceLocator.getInstance(getApplication());
-        presenter = new AllSongPresenter(
+        presenter = new SongListPresenter(
                 this,
                 new GetSongUseCase(serviceLocator.getSongDataSource()),
                 serviceLocator.getIoExecutorService(),
