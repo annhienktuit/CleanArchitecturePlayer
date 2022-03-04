@@ -4,7 +4,7 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
-public interface AllSongView {
+public interface SongListView {
     void showSongList(List<Song> songList);
 
     void showNoResultText();

@@ -7,11 +7,11 @@ import com.google.android.exoplayer2.MediaItem;
 
 import java.util.concurrent.ExecutorService;
 
-public class ExoPlayerPresenter {
+public class PlayerPresenter implements PlayerPresenterInterface{
 
     private ExoPlayer exoPlayer;
 
-    private ExoPlayerView exoPlayerView;
+    private PlayerView playerView;
 
     private GetSongUseCase getSongUseCase;
 
@@ -19,14 +19,15 @@ public class ExoPlayerPresenter {
 
     private ExecutorService mainExecutorService;
 
-    public ExoPlayerPresenter(ExoPlayer exoPlayer, ExoPlayerView exoPlayerView, GetSongUseCase getSongUseCase, ExecutorService ioExecutorService, ExecutorService mainExecutorService) {
+    public PlayerPresenter(ExoPlayer exoPlayer, PlayerView playerView, GetSongUseCase getSongUseCase, ExecutorService ioExecutorService, ExecutorService mainExecutorService) {
         this.exoPlayer = exoPlayer;
-        this.exoPlayerView = exoPlayerView;
+        this.playerView = playerView;
         this.getSongUseCase = getSongUseCase;
         this.ioExecutorService = ioExecutorService;
         this.mainExecutorService = mainExecutorService;
     }
 
+    @Override
     public void startPlay(String url) {
         MediaItem mediaItem = MediaItem.fromUri(url);
         exoPlayer.addMediaItem(mediaItem);
@@ -34,9 +35,16 @@ public class ExoPlayerPresenter {
         exoPlayer.play();
     }
 
+    @Override
+    public void releasePlayer() {
+        exoPlayer.stop();
+        exoPlayer.release();
+    }
+
+    @Override
     public void initializeMedia(int id) {
         mainExecutorService.execute(() -> {
-            exoPlayerView.showPlayer();
+            playerView.showPlayer();
 
             ioExecutorService.execute(() -> {
                 try {
