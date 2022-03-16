@@ -1,26 +1,30 @@
 package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.annhienktuit.cleanarchitectureplayer.DefaultServiceLocator;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.ServiceLocator;
+import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerActivity;
+import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+
+import javax.inject.Inject;
 
 public class SongListListActivity extends AppCompatActivity implements SongListView {
 
@@ -29,18 +33,29 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
     private SongListAdapter adapter;
     private SongListPresenterInterface presenter;
 
+    @Inject
+    MainThreadExecutorService mainThreadExecutorService;
+
+    @Inject
+    ExecutorService ioExecutorService;
+
+    @Inject
+    SongDataSource onlineSongDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         attachView();
-        ServiceLocator serviceLocator = DefaultServiceLocator.getInstance(getApplication());
+
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
+        applicationComponent.inject(this);
+
         presenter = new SongListPresenter(
                 this,
-                new GetSongUseCase(serviceLocator.getSongDataSource()),
-                serviceLocator.getIoExecutorService(),
-                serviceLocator.getMainExecutorService());
+                new GetSongUseCase(onlineSongDataSource),
+                ioExecutorService,
+                mainThreadExecutorService);
         adapter = new SongListAdapter(presenter);
         recyclerViewSongList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewSongList.setAdapter(adapter);
@@ -68,7 +83,6 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
     public void openSong(Song song) {
         Intent intent = new Intent(this, PlayerActivity.class);
         intent.putExtra(PlayerActivity.SONG_ID, song.getId());
-        Log.i("Nhiennha", song.getId());
         startActivity(intent);
     }
 

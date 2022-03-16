@@ -23,11 +23,11 @@ public class RetrofitSongDataSource implements SongDataSource {
             .build()
             .create(GetSongService.class);
 
+    public RetrofitSongDataSource(){}
 
     @Override
     public Song getSong(int id) throws Exception {
         Response<Song> response = getSongService.getSong(id).execute();
-        Log.i("Nhiennha ", response.toString());
         if (response.isSuccessful()) {
             return response.body();
         } else {
@@ -38,7 +38,6 @@ public class RetrofitSongDataSource implements SongDataSource {
     @Override
     public List<Song> getAllSong() throws Exception {
         Response<List<Song>> response = getSongService.getAllSong().execute();
-        Log.i("Nhiennha ", String.valueOf(response.body().size()));
         if (response.isSuccessful()) {
             return response.body();
         } else {

@@ -7,13 +7,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.annhienktuit.cleanarchitectureplayer.DefaultServiceLocator;
+import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.ServiceLocator;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
+import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+
+import java.util.concurrent.ExecutorService;
+
+import javax.inject.Inject;
 
 public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
@@ -27,12 +33,23 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     int id;
 
+    @Inject
+    MainThreadExecutorService mainThreadExecutorService;
+
+    @Inject
+    ExecutorService ioExecutorService;
+
+    @Inject
+    SongDataSource onlineSongDataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         playerView = findViewById(R.id.playerView);
-        ServiceLocator serviceLocator = DefaultServiceLocator.getInstance(getApplication());
+
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
+        applicationComponent.inject(this);
 
         exoPlayer = new ExoPlayer.Builder(this)
                 .setMediaSourceFactory(new DefaultMediaSourceFactory(this))
@@ -44,9 +61,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
         presenter = new PlayerPresenter(
                 exoPlayer,
                 this,
-                new GetSongUseCase(serviceLocator.getSongDataSource()),
-                serviceLocator.getIoExecutorService(),
-                serviceLocator.getMainExecutorService());
+                new GetSongUseCase(onlineSongDataSource),
+                ioExecutorService,
+                mainThreadExecutorService);
 
         Bundle bundle =  getIntent().getExtras();
         id = Integer.parseInt(bundle.getString(SONG_ID));
