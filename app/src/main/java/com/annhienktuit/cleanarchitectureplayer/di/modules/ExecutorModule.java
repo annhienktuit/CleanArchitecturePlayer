@@ -4,6 +4,7 @@ package com.annhienktuit.cleanarchitectureplayer.di.modules;
 import android.util.Log;
 
 import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
+import com.annhienktuit.cleanarchitectureplayer.di.ApplicationScope;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,13 +27,13 @@ public class ExecutorModule {
         Log.i("Nhiennha ", String.valueOf(mainThreadExecutorService.hashCode()));
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     public MainThreadExecutorService provideMainThreadExecutorService(){
         return mainThreadExecutorService;
     }
 
-    @Singleton
+    @ApplicationScope
     @Provides
     public ExecutorService provideIoExecutorService(){
         return ioExecutorService;

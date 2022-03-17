@@ -3,8 +3,7 @@ package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +16,7 @@ import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.R;
 import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerActivity;
 import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.models.Song;
@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 
-public class SongListListActivity extends AppCompatActivity implements SongListView {
+public class SongListActivity extends AppCompatActivity implements SongListView {
 
     private RecyclerView recyclerViewSongList;
     private TextView tvNoResult;
@@ -52,7 +52,11 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
         setContentView(R.layout.activity_main);
         attachView();
 
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
+        ApplicationComponent applicationComponent = DaggerApplicationComponent
+                .builder()
+                .appModule(new AppModule(getApplication()))
+                .build();
+
         applicationComponent.inject(this);
 
         presenter = new SongListPresenter(

@@ -11,6 +11,7 @@ import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.R;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -51,7 +52,10 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
         setContentView(R.layout.activity_player);
         playerView = findViewById(R.id.playerView);
 
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder().build();
+        ApplicationComponent applicationComponent = DaggerApplicationComponent
+                .builder()
+                .appModule(new AppModule(getApplication()))
+                .build();
         applicationComponent.inject(this);
 
         exoPlayer = new ExoPlayer.Builder(this)
