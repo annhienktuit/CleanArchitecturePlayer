@@ -1,5 +1,6 @@
 package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +43,9 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
     @Inject
     SongDataSource onlineSongDataSource;
 
+    @Inject
+    GetSongUseCase getSongUseCase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +57,7 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
 
         presenter = new SongListPresenter(
                 this,
-                new GetSongUseCase(onlineSongDataSource),
+                getSongUseCase,
                 ioExecutorService,
                 mainThreadExecutorService);
         adapter = new SongListAdapter(presenter);
@@ -67,6 +71,7 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
         tvNoResult = findViewById(R.id.tvNoResult);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void showSongList(List<Song> songList) {
         recyclerViewSongList.setVisibility(View.VISIBLE);
@@ -88,7 +93,6 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
 
     @Override
     public void showErrorToast(String error) {
-        new Handler(Looper.getMainLooper()).post(
-                () -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show());
+        mainThreadExecutorService.execute(() -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show());
     }
 }

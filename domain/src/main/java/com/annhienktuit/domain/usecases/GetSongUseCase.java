@@ -5,6 +5,7 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
+//Usecase
 public class GetSongUseCase {
     private SongDataSource songDataSource;
 

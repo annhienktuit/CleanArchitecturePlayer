@@ -42,6 +42,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
     @Inject
     SongDataSource onlineSongDataSource;
 
+    @Inject
+    GetSongUseCase getSongUseCase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
         presenter = new PlayerPresenter(
                 exoPlayer,
                 this,
-                new GetSongUseCase(onlineSongDataSource),
+                getSongUseCase,
                 ioExecutorService,
                 mainThreadExecutorService);
 
