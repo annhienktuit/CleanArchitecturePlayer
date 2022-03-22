@@ -1,7 +1,5 @@
 package com.annhienktuit.domain.models;
 
-import com.google.gson.annotations.SerializedName;
-
 //Model
 public class Song {
     String id;
