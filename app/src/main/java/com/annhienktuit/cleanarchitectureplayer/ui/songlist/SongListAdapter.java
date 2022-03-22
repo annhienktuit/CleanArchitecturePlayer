@@ -17,9 +17,9 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     private List<Song> songList;
 
-    private SongListPresenterInterface presenter;
+    private SongListPresenter presenter;
 
-    public SongListAdapter(SongListPresenterInterface presenter){
+    public SongListAdapter(SongListPresenter presenter){
         this.presenter = presenter;
     }
 

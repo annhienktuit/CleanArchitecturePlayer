@@ -28,7 +28,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     private com.google.android.exoplayer2.ui.PlayerView playerView;
 
-    private PlayerPresenterInterface presenter;
+    private PlayerPresenter presenter;
 
     private ExoPlayer exoPlayer;
 
@@ -65,7 +65,7 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
         playerView.setPlayer(exoPlayer);
 
-        presenter = new PlayerPresenter(
+        presenter = new PlayerPresenterImpl(
                 exoPlayer,
                 this,
                 getSongUseCase,

@@ -4,7 +4,6 @@ plugins {
 
 android {
     compileSdk 31
-    compileOptions.incremental = false
     defaultConfig {
         applicationId "com.annhienktuit.cleanarchitectureplayer"
         minSdk 23

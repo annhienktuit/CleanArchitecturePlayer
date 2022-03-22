@@ -3,7 +3,6 @@ package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +31,7 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
     private RecyclerView recyclerViewSongList;
     private TextView tvNoResult;
     private SongListAdapter adapter;
-    private SongListPresenterInterface presenter;
+    private SongListPresenter presenter;
 
     @Inject
     MainThreadExecutorService mainThreadExecutorService;
@@ -59,7 +58,7 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
 
         applicationComponent.inject(this);
 
-        presenter = new SongListPresenter(
+        presenter = new SongListPresenterImpl(
                 this,
                 getSongUseCase,
                 ioExecutorService,
