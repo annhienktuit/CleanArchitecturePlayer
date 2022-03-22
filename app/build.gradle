@@ -27,8 +27,8 @@ android {
 }
 
 dependencies {
-    implementation project(path:':domain')
-    implementation project(path:':data')
+    api project(path:':domain')
+    api project(path:':data')
 
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'

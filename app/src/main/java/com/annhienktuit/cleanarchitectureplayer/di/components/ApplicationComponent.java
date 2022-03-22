@@ -8,11 +8,8 @@ import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.DataSourceModule;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.ExecutorModule;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.UseCaseModule;
-import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerActivity;
-import com.annhienktuit.cleanarchitectureplayer.ui.songlist.SongListActivity;
-import com.annhienktuit.domain.interfaces.SongDataSource;
-
-import javax.inject.Singleton;
+import com.annhienktuit.cleanarchitectureplayer.ui.activities.PlayerActivity;
+import com.annhienktuit.cleanarchitectureplayer.ui.activities.SongListActivity;
 
 import dagger.Component;
 

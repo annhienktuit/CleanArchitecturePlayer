@@ -1,4 +1,4 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.player;
+package com.annhienktuit.cleanarchitectureplayer.ui.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +12,9 @@ import com.annhienktuit.cleanarchitectureplayer.R;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
+import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerPresenter;
+import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerPresenterImpl;
+import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerView;
 import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;

@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CleanArchitecturePlayer" >
         <activity
-            android:name=".ui.player.PlayerActivity"
+            android:name=".ui.activities.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.songlist.SongListActivity"
+            android:name=".ui.activities.SongListActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
