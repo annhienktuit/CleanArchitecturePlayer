@@ -1,5 +1,6 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.player;
+package com.annhienktuit.cleanarchitectureplayer.ui.presenters;
 
+import com.annhienktuit.cleanarchitectureplayer.ui.views.PlayerView;
 import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;

@@ -1,4 +1,4 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
+package com.annhienktuit.cleanarchitectureplayer.ui.views;
 
 import com.annhienktuit.domain.models.Song;
 

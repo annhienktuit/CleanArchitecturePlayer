@@ -17,9 +17,9 @@ import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationCompone
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.cleanarchitectureplayer.ui.adapters.SongListAdapter;
-import com.annhienktuit.cleanarchitectureplayer.ui.songlist.SongListPresenter;
-import com.annhienktuit.cleanarchitectureplayer.ui.songlist.SongListPresenterImpl;
-import com.annhienktuit.cleanarchitectureplayer.ui.songlist.SongListView;
+import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenter;
+import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenterImpl;
+import com.annhienktuit.cleanarchitectureplayer.ui.views.SongListView;
 import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;

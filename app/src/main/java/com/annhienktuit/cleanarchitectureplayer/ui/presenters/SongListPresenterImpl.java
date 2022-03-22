@@ -1,7 +1,8 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
+package com.annhienktuit.cleanarchitectureplayer.ui.presenters;
 
 import android.util.Log;
 
+import com.annhienktuit.cleanarchitectureplayer.ui.views.SongListView;
 import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 
