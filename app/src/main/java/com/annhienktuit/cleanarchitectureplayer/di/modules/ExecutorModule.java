@@ -4,12 +4,10 @@ package com.annhienktuit.cleanarchitectureplayer.di.modules;
 import android.util.Log;
 
 import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
-import com.annhienktuit.cleanarchitectureplayer.di.ApplicationScope;
+import com.annhienktuit.cleanarchitectureplayer.di.scopes.ApplicationScope;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;

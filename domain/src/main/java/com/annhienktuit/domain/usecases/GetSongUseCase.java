@@ -5,12 +5,16 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 //Usecase
 public class GetSongUseCase {
-    private SongDataSource songDataSource;
+    @Inject
+    SongDataSource songDataSource;
 
-    public GetSongUseCase(SongDataSource songDataSource){
-        this.songDataSource = songDataSource;
+    @Inject
+    public GetSongUseCase(){
+
     }
 
     public Song execute(int id) throws Exception {

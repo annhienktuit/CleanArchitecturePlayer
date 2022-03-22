@@ -1,4 +1,4 @@
-package com.annhienktuit.cleanarchitectureplayer.di;
+package com.annhienktuit.cleanarchitectureplayer.di.scopes;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
