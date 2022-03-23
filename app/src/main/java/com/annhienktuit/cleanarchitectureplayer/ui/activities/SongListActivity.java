@@ -3,6 +3,8 @@ package com.annhienktuit.cleanarchitectureplayer.ui.activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,42 +13,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
+import com.annhienktuit.cleanarchitectureplayer.App;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerSongListComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.cleanarchitectureplayer.ui.adapters.SongListAdapter;
 import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenter;
-import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenterImpl;
 import com.annhienktuit.cleanarchitectureplayer.ui.views.SongListView;
-import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.models.Song;
-import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 
 public class SongListActivity extends AppCompatActivity implements SongListView {
 
     private RecyclerView recyclerViewSongList;
+
     private TextView tvNoResult;
+
     private SongListAdapter adapter;
-    private SongListPresenter presenter;
 
     @Inject
-    MainThreadExecutorService mainThreadExecutorService;
-
-    @Inject
-    ExecutorService ioExecutorService;
-
-    @Inject
-    SongDataSource onlineSongDataSource;
-
-    @Inject
-    GetSongUseCase getSongUseCase;
+    SongListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +44,15 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
         setContentView(R.layout.activity_main);
         attachView();
 
-        ApplicationComponent applicationComponent = DaggerApplicationComponent
+        App application = (App)getApplication();
+        DaggerSongListComponent
                 .builder()
-                .appModule(new AppModule(getApplication()))
-                .build();
+                .applicationComponent(application.getApplicationComponent())
+                .build()
+                .inject(this);
 
-        applicationComponent.inject(this);
+        presenter.attachView(this);
 
-        presenter = new SongListPresenterImpl(
-                this,
-                getSongUseCase,
-                ioExecutorService,
-                mainThreadExecutorService);
         adapter = new SongListAdapter(presenter);
         recyclerViewSongList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewSongList.setAdapter(adapter);
@@ -99,6 +86,7 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
 
     @Override
     public void showErrorToast(String error) {
-        mainThreadExecutorService.execute(() -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show());
+        new Handler(Looper.getMainLooper()).post(
+                () -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show());
     }
 }

@@ -9,6 +9,8 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -21,14 +23,15 @@ public class RetrofitSongDataSource implements SongDataSource {
 
     SongMapper mapper = new SongMapper();
 
+    @Inject
+    public RetrofitSongDataSource(){}
+
     private final GetSongService getSongService = new Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .build()
             .create(GetSongService.class);
-
-    public RetrofitSongDataSource(){}
 
     @Override
     public Song getSong(int id) throws Exception {

@@ -1,5 +1,6 @@
 package com.annhienktuit.cleanarchitectureplayer.ui.presenters;
 
+import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.ui.views.PlayerView;
 import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
@@ -8,24 +9,28 @@ import com.google.android.exoplayer2.MediaItem;
 
 import java.util.concurrent.ExecutorService;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 public class PlayerPresenterImpl implements PlayerPresenter {
 
     private ExoPlayer exoPlayer;
 
     private PlayerView playerView;
 
-    private GetSongUseCase getSongUseCase;
+    @Inject
+    GetSongUseCase getSongUseCase;
 
-    private ExecutorService ioExecutorService;
+    @Inject
+    @Named("IOThread")
+    ExecutorService ioExecutorService;
 
-    private ExecutorService mainExecutorService;
+//    @Inject
+//    @Named("MainThread")
+    ExecutorService mainExecutorService = new MainThreadExecutorService();
 
-    public PlayerPresenterImpl(ExoPlayer exoPlayer, PlayerView playerView, GetSongUseCase getSongUseCase, ExecutorService ioExecutorService, ExecutorService mainExecutorService) {
-        this.exoPlayer = exoPlayer;
-        this.playerView = playerView;
-        this.getSongUseCase = getSongUseCase;
-        this.ioExecutorService = ioExecutorService;
-        this.mainExecutorService = mainExecutorService;
+    @Inject
+    public PlayerPresenterImpl() {
     }
 
     @Override
@@ -40,6 +45,16 @@ public class PlayerPresenterImpl implements PlayerPresenter {
     public void releasePlayer() {
         exoPlayer.stop();
         exoPlayer.release();
+    }
+
+    @Override
+    public void attachView(PlayerView view) {
+        this.playerView = view;
+    }
+
+    @Override
+    public void attachPlayer(ExoPlayer player) {
+        this.exoPlayer = player;
     }
 
     @Override

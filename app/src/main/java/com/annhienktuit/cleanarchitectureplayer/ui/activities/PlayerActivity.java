@@ -7,11 +7,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.annhienktuit.cleanarchitectureplayer.App;
 import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.R;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerPlayerComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
+import com.annhienktuit.cleanarchitectureplayer.di.scopes.IOThreadScope;
+import com.annhienktuit.cleanarchitectureplayer.di.scopes.MainThreadScope;
 import com.annhienktuit.cleanarchitectureplayer.ui.presenters.PlayerPresenter;
 import com.annhienktuit.cleanarchitectureplayer.ui.presenters.PlayerPresenterImpl;
 import com.annhienktuit.cleanarchitectureplayer.ui.views.PlayerView;
@@ -24,6 +28,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
@@ -31,23 +36,13 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     private com.google.android.exoplayer2.ui.PlayerView playerView;
 
-    private PlayerPresenter presenter;
-
     private ExoPlayer exoPlayer;
 
     int id;
 
     @Inject
-    MainThreadExecutorService mainThreadExecutorService;
+    PlayerPresenter presenter;
 
-    @Inject
-    ExecutorService ioExecutorService;
-
-    @Inject
-    SongDataSource onlineSongDataSource;
-
-    @Inject
-    GetSongUseCase getSongUseCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +50,12 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
         setContentView(R.layout.activity_player);
         playerView = findViewById(R.id.playerView);
 
-        ApplicationComponent applicationComponent = DaggerApplicationComponent
+        App application = (App)getApplication();
+        DaggerPlayerComponent
                 .builder()
-                .appModule(new AppModule(getApplication()))
-                .build();
-        applicationComponent.inject(this);
+                .applicationComponent(application.getApplicationComponent())
+                .build()
+                .inject(this);
 
         exoPlayer = new ExoPlayer.Builder(this)
                 .setMediaSourceFactory(new DefaultMediaSourceFactory(this))
@@ -68,12 +64,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
         playerView.setPlayer(exoPlayer);
 
-        presenter = new PlayerPresenterImpl(
-                exoPlayer,
-                this,
-                getSongUseCase,
-                ioExecutorService,
-                mainThreadExecutorService);
+        presenter.attachPlayer(exoPlayer);
+
+        presenter.attachView(this);
 
         Bundle bundle =  getIntent().getExtras();
         id = Integer.parseInt(bundle.getString(SONG_ID));

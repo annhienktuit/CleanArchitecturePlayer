@@ -2,6 +2,7 @@ package com.annhienktuit.cleanarchitectureplayer.ui.presenters;
 
 import android.util.Log;
 
+import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.ui.views.SongListView;
 import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
@@ -9,18 +10,25 @@ import com.annhienktuit.domain.usecases.GetSongUseCase;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 public class SongListPresenterImpl implements SongListPresenter {
     private SongListView songListView;
-    private GetSongUseCase getSongUseCase;
-    private ExecutorService ioExecutorService;
-    private ExecutorService mainExecutorService;
 
-    public SongListPresenterImpl(SongListView songListView, GetSongUseCase getSongUseCase, ExecutorService ioExecutorService, ExecutorService mainExecutorService) {
-        this.songListView = songListView;
-        this.getSongUseCase = getSongUseCase;
-        this.ioExecutorService = ioExecutorService;
-        this.mainExecutorService = mainExecutorService;
-    }
+    @Inject
+    GetSongUseCase getSongUseCase;
+
+    @Inject
+    @Named("IOThread")
+    ExecutorService ioExecutorService;
+
+//    @Inject
+//    @Named("MainThread")
+    ExecutorService mainExecutorService = new MainThreadExecutorService();
+
+    @Inject
+    public SongListPresenterImpl() { }
 
     @Override
     public void loadSong(){
@@ -52,6 +60,11 @@ public class SongListPresenterImpl implements SongListPresenter {
         mainExecutorService.execute(() -> {
             songListView.openSong(song);
         });
+    }
+
+    @Override
+    public void attachView(SongListView view) {
+        this.songListView = view;
     }
 
 }
