@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 public class MainThreadExecutorService extends AbstractExecutorService {
     private Handler handler = new Handler(Looper.getMainLooper());
 
+    public MainThreadExecutorService(){}
+
     @Override
     public void execute(Runnable command) {
         if (Looper.getMainLooper() == Looper.myLooper()) {

@@ -1,15 +1,25 @@
-package com.annhienktuit.domain.models;
+package com.annhienktuit.data.models;
 
-public class Song {
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Created by Nhien Nguyen on 3/22/2022
+ */
+public class SongModel {
+
+    @SerializedName("id")
     String id;
 
+    @SerializedName("song_name")
     String title;
 
+    @SerializedName("url")
     String songURL;
 
+    @SerializedName("artist")
     String artist;
 
-    public Song(String id, String title, String songURL, String artist) {
+    public SongModel(String id, String title, String songURL, String artist) {
         this.id = id;
         this.title = title;
         this.songURL = songURL;
@@ -48,4 +58,3 @@ public class Song {
         this.artist = artist;
     }
 }
-

@@ -1,46 +1,58 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.songlist;
+package com.annhienktuit.cleanarchitectureplayer.ui.activities;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.annhienktuit.cleanarchitectureplayer.DefaultServiceLocator;
+import com.annhienktuit.cleanarchitectureplayer.App;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.ServiceLocator;
-import com.annhienktuit.cleanarchitectureplayer.ui.player.PlayerActivity;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerSongListComponent;
+import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
+import com.annhienktuit.cleanarchitectureplayer.ui.adapters.SongListAdapter;
+import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenter;
+import com.annhienktuit.cleanarchitectureplayer.ui.views.SongListView;
 import com.annhienktuit.domain.models.Song;
-import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;
 
-public class SongListListActivity extends AppCompatActivity implements SongListView {
+import javax.inject.Inject;
+
+public class SongListActivity extends AppCompatActivity implements SongListView {
 
     private RecyclerView recyclerViewSongList;
-    private TextView tvNoResult;
-    private SongListAdapter adapter;
-    private SongListPresenter presenter;
 
+    private TextView tvNoResult;
+
+    private SongListAdapter adapter;
+
+    @Inject
+    SongListPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         attachView();
-        ServiceLocator serviceLocator = DefaultServiceLocator.getInstance(getApplication());
-        presenter = new SongListPresenter(
-                this,
-                new GetSongUseCase(serviceLocator.getSongDataSource()),
-                serviceLocator.getIoExecutorService(),
-                serviceLocator.getMainExecutorService());
+
+        App application = (App)getApplication();
+        DaggerSongListComponent
+                .builder()
+                .applicationComponent(application.getApplicationComponent())
+                .build()
+                .inject(this);
+
+        presenter.attachView(this);
+
         adapter = new SongListAdapter(presenter);
         recyclerViewSongList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewSongList.setAdapter(adapter);
@@ -52,6 +64,7 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
         tvNoResult = findViewById(R.id.tvNoResult);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void showSongList(List<Song> songList) {
         recyclerViewSongList.setVisibility(View.VISIBLE);
@@ -68,7 +81,6 @@ public class SongListListActivity extends AppCompatActivity implements SongListV
     public void openSong(Song song) {
         Intent intent = new Intent(this, PlayerActivity.class);
         intent.putExtra(PlayerActivity.SONG_ID, song.getId());
-        Log.i("Nhiennha", song.getId());
         startActivity(intent);
     }
 

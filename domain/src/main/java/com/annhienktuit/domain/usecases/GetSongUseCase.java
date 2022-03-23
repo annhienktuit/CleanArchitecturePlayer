@@ -5,11 +5,15 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
-public class GetSongUseCase {
-    private SongDataSource songDataSource;
+import javax.inject.Inject;
 
-    public GetSongUseCase(SongDataSource songDataSource){
-        this.songDataSource = songDataSource;
+public class GetSongUseCase {
+    @Inject
+    SongDataSource songDataSource;
+
+    @Inject
+    public GetSongUseCase(){
+
     }
 
     public Song execute(int id) throws Exception {

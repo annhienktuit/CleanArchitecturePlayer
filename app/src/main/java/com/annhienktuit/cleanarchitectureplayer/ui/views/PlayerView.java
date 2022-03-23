@@ -1,4 +1,4 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.player;
+package com.annhienktuit.cleanarchitectureplayer.ui.views;
 
 public interface PlayerView {
 

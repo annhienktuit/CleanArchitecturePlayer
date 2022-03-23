@@ -1,4 +1,4 @@
-package com.annhienktuit.cleanarchitectureplayer.ui.player;
+package com.annhienktuit.cleanarchitectureplayer.ui.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,13 +7,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.annhienktuit.cleanarchitectureplayer.DefaultServiceLocator;
+import com.annhienktuit.cleanarchitectureplayer.App;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.ServiceLocator;
-import com.annhienktuit.domain.usecases.GetSongUseCase;
+import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerPlayerComponent;
+import com.annhienktuit.cleanarchitectureplayer.ui.presenters.PlayerPresenter;
+import com.annhienktuit.cleanarchitectureplayer.ui.views.PlayerView;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+
+import javax.inject.Inject;
 
 public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
@@ -21,18 +24,26 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     private com.google.android.exoplayer2.ui.PlayerView playerView;
 
-    private PlayerPresenter presenter;
-
     private ExoPlayer exoPlayer;
 
     int id;
+
+    @Inject
+    PlayerPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         playerView = findViewById(R.id.playerView);
-        ServiceLocator serviceLocator = DefaultServiceLocator.getInstance(getApplication());
+
+        App application = (App)getApplication();
+        DaggerPlayerComponent
+                .builder()
+                .applicationComponent(application.getApplicationComponent())
+                .build()
+                .inject(this);
 
         exoPlayer = new ExoPlayer.Builder(this)
                 .setMediaSourceFactory(new DefaultMediaSourceFactory(this))
@@ -41,12 +52,9 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
         playerView.setPlayer(exoPlayer);
 
-        presenter = new PlayerPresenter(
-                exoPlayer,
-                this,
-                new GetSongUseCase(serviceLocator.getSongDataSource()),
-                serviceLocator.getIoExecutorService(),
-                serviceLocator.getMainExecutorService());
+        presenter.attachPlayer(exoPlayer);
+
+        presenter.attachView(this);
 
         Bundle bundle =  getIntent().getExtras();
         id = Integer.parseInt(bundle.getString(SONG_ID));
