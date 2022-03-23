@@ -45,14 +45,10 @@ public class RetrofitSongDataSource implements SongDataSource {
 
     @Override
     public List<Song> getAllSong() throws Exception {
-        List<Song> songList = new ArrayList<>();
         Response<List<SongModel>> responses = getSongService.getAllSong().execute();
         if (responses.isSuccessful()) {
             assert responses.body() != null;
-            for(SongModel response: responses.body()){
-                songList.add(mapper.fromModel(response));
-            }
-            return songList;
+            return mapper.fromModel(responses.body());
         } else {
             throw new Exception(responses.message());
         }

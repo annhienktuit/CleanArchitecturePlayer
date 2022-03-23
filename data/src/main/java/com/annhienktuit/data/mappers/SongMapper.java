@@ -32,4 +32,23 @@ public class SongMapper<E, M> implements Mapper<Song, SongModel> {
                 entity.getArtist()
         );
     }
+
+    @Override
+    public List<Song> fromModel(List<SongModel> modelList) {
+        List<Song> songList = new ArrayList<>();
+        for(SongModel songModel: modelList){
+            songList.add(fromModel(songModel));
+        }
+        return songList;
+    }
+
+    @Override
+    public List<SongModel> fromEntity(List<Song> entityList) {
+        List<SongModel> songModels = new ArrayList<>();
+        for(Song songEntity: entityList ){
+            songModels.add(fromEntity(songEntity));
+        }
+        return songModels;
+    }
+
 }
