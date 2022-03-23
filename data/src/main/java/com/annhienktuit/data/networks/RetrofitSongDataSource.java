@@ -6,7 +6,6 @@ import com.annhienktuit.data.models.SongModel;
 import com.annhienktuit.domain.interfaces.SongDataSource;
 import com.annhienktuit.domain.models.Song;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,5 +52,4 @@ public class RetrofitSongDataSource implements SongDataSource {
             throw new Exception(responses.message());
         }
     }
-
 }

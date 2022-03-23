@@ -20,11 +20,11 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
 
     private List<Song> songList;
 
-    @Inject
     SongListPresenter presenter;
 
     @Inject
-    public SongListAdapter(){
+    public SongListAdapter(SongListPresenter presenter){
+        this.presenter = presenter;
     }
 
     @NonNull

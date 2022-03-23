@@ -19,6 +19,8 @@ public class SongModel {
     @SerializedName("artist")
     String artist;
 
+    public SongModel(){}
+
     public SongModel(String id, String title, String songURL, String artist) {
         this.id = id;
         this.title = title;

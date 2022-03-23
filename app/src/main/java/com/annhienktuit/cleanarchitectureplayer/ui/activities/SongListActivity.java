@@ -15,9 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.annhienktuit.cleanarchitectureplayer.App;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerSongListComponent;
-import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.cleanarchitectureplayer.ui.adapters.SongListAdapter;
 import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenter;
 import com.annhienktuit.cleanarchitectureplayer.ui.views.SongListView;
@@ -29,14 +27,11 @@ import javax.inject.Inject;
 
 public class SongListActivity extends AppCompatActivity implements SongListView {
 
-    private RecyclerView recyclerViewSongList;
-
-    private TextView tvNoResult;
-
-    private SongListAdapter adapter;
-
     @Inject
     SongListPresenter presenter;
+    private RecyclerView recyclerViewSongList;
+    private TextView tvNoResult;
+    private SongListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +39,16 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
         setContentView(R.layout.activity_main);
         attachView();
 
-        App application = (App)getApplication();
+        App application = (App) getApplication();
         DaggerSongListComponent
                 .builder()
                 .applicationComponent(application.getApplicationComponent())
                 .build()
-                .inject(this);
+                                                                .inject(this);
 
         presenter.attachView(this);
 
-        adapter = new SongListAdapter();
+        adapter = new SongListAdapter(presenter);
         recyclerViewSongList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewSongList.setAdapter(adapter);
         presenter.loadSong();

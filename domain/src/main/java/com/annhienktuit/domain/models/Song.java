@@ -9,6 +9,8 @@ public class Song {
 
     String artist;
 
+    public Song(){}
+
     public Song(String id, String title, String songURL, String artist) {
         this.id = id;
         this.title = title;

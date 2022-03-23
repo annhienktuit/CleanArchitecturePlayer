@@ -1,6 +1,8 @@
 package com.annhienktuit.cleanarchitectureplayer.ui.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -79,7 +81,8 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
 
     @Override
     public void showErrorToast(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        new Handler(Looper.getMainLooper()).post(
+                () -> Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show());
     }
 
     @Override

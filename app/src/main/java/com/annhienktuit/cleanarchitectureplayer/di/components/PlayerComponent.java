@@ -3,6 +3,7 @@ package com.annhienktuit.cleanarchitectureplayer.di.components;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.PlayerModule;
 import com.annhienktuit.cleanarchitectureplayer.di.scopes.ActivityScope;
 import com.annhienktuit.cleanarchitectureplayer.ui.activities.PlayerActivity;
+import com.annhienktuit.cleanarchitectureplayer.ui.presenters.SongListPresenter;
 
 import dagger.Component;
 
