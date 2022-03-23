@@ -8,27 +8,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.annhienktuit.cleanarchitectureplayer.App;
-import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
 import com.annhienktuit.cleanarchitectureplayer.R;
-import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerApplicationComponent;
-import com.annhienktuit.cleanarchitectureplayer.di.components.ApplicationComponent;
 import com.annhienktuit.cleanarchitectureplayer.di.components.DaggerPlayerComponent;
-import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
-import com.annhienktuit.cleanarchitectureplayer.di.scopes.IOThreadScope;
-import com.annhienktuit.cleanarchitectureplayer.di.scopes.MainThreadScope;
 import com.annhienktuit.cleanarchitectureplayer.ui.presenters.PlayerPresenter;
-import com.annhienktuit.cleanarchitectureplayer.ui.presenters.PlayerPresenterImpl;
 import com.annhienktuit.cleanarchitectureplayer.ui.views.PlayerView;
-import com.annhienktuit.domain.interfaces.SongDataSource;
-import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 
-import java.util.concurrent.ExecutorService;
-
 import javax.inject.Inject;
-import javax.inject.Named;
 
 public class PlayerActivity extends AppCompatActivity implements PlayerView {
 

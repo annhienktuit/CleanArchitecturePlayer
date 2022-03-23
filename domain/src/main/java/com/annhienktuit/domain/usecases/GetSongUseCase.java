@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-//Usecase
 public class GetSongUseCase {
     @Inject
     SongDataSource songDataSource;

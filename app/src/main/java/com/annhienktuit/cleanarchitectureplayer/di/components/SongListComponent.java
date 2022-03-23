@@ -2,7 +2,6 @@ package com.annhienktuit.cleanarchitectureplayer.di.components;
 
 import com.annhienktuit.cleanarchitectureplayer.di.modules.SongListModule;
 import com.annhienktuit.cleanarchitectureplayer.di.scopes.ActivityScope;
-import com.annhienktuit.cleanarchitectureplayer.di.scopes.ApplicationScope;
 import com.annhienktuit.cleanarchitectureplayer.ui.activities.SongListActivity;
 
 import dagger.Component;

@@ -1,9 +1,8 @@
 package com.annhienktuit.cleanarchitectureplayer.di.modules;
 
 import com.annhienktuit.cleanarchitectureplayer.MainThreadExecutorService;
-import com.annhienktuit.cleanarchitectureplayer.di.scopes.ActivityScope;
-import com.annhienktuit.cleanarchitectureplayer.di.scopes.ApplicationScope;
 
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,15 +17,13 @@ import dagger.Provides;
 @Module
 public class ExecutorModule {
 
-//    @Provides
-//    @ApplicationScope
-//    @Named("MainThread")
-//    public MainThreadExecutorService provideMainThreadExecutorService(){
-//        return new MainThreadExecutorService();
-//    }
+    @Provides
+    @Named("MainThread")
+    public AbstractExecutorService provideMainThreadExecutorService(){
+        return new MainThreadExecutorService();
+    }
 
     @Provides
-    @ApplicationScope
     @Named("IOThread")
     public ExecutorService provideIoExecutorService(){
         return Executors.newCachedThreadPool();

@@ -1,6 +1,5 @@
 package com.annhienktuit.domain.models;
 
-//Model
 public class Song {
     String id;
 

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Nhien Nguyen on 3/22/2022
  */
-public class SongData {
+public class SongModel {
 
     @SerializedName("id")
     String id;
@@ -18,6 +18,13 @@ public class SongData {
 
     @SerializedName("artist")
     String artist;
+
+    public SongModel(String id, String title, String songURL, String artist) {
+        this.id = id;
+        this.title = title;
+        this.songURL = songURL;
+        this.artist = artist;
+    }
 
     public String getId() {
         return id;

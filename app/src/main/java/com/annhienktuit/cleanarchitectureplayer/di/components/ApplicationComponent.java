@@ -2,17 +2,16 @@ package com.annhienktuit.cleanarchitectureplayer.di.components;
 
 import android.app.Application;
 
-import com.annhienktuit.cleanarchitectureplayer.di.scopes.ApplicationScope;
 import com.annhienktuit.cleanarchitectureplayer.di.modules.AppModule;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Named;
 
 import dagger.Component;
 
-@ApplicationScope
 @Component(modules = {AppModule.class})
 public interface ApplicationComponent {
 
@@ -23,8 +22,7 @@ public interface ApplicationComponent {
     @Named("IOThread")
     ExecutorService IoExecutorService();
 
-//    @Named("MainThread")
-//    ExecutorService mainExecutorService();
-
+    @Named("MainThread")
+    AbstractExecutorService mainExecutorService();
 
 }

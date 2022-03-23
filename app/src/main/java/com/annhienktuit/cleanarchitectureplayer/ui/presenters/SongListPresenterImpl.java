@@ -8,6 +8,7 @@ import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -23,9 +24,9 @@ public class SongListPresenterImpl implements SongListPresenter {
     @Named("IOThread")
     ExecutorService ioExecutorService;
 
-//    @Inject
-//    @Named("MainThread")
-    ExecutorService mainExecutorService = new MainThreadExecutorService();
+    @Inject
+    @Named("MainThread")
+    AbstractExecutorService mainExecutorService = new MainThreadExecutorService();
 
     @Inject
     public SongListPresenterImpl() { }

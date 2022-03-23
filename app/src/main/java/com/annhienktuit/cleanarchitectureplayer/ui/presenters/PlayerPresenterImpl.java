@@ -7,6 +7,7 @@ import com.annhienktuit.domain.usecases.GetSongUseCase;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -25,9 +26,9 @@ public class PlayerPresenterImpl implements PlayerPresenter {
     @Named("IOThread")
     ExecutorService ioExecutorService;
 
-//    @Inject
-//    @Named("MainThread")
-    ExecutorService mainExecutorService = new MainThreadExecutorService();
+    @Inject
+    @Named("MainThread")
+    AbstractExecutorService mainExecutorService = new MainThreadExecutorService();
 
     @Inject
     public PlayerPresenterImpl() {
