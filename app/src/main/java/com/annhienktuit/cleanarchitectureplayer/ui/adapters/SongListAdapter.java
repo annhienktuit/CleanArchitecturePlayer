@@ -13,15 +13,18 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder> {
 
     private List<Song> songList;
 
-    private SongListPresenter presenter;
+    @Inject
+    SongListPresenter presenter;
 
-    public SongListAdapter(SongListPresenter presenter){
-        this.presenter = presenter;
+    @Inject
+    public SongListAdapter(){
     }
 
     @NonNull

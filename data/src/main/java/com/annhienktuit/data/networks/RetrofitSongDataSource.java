@@ -1,5 +1,6 @@
 package com.annhienktuit.data.networks;
 
+import com.annhienktuit.data.mappers.Mapper;
 import com.annhienktuit.data.mappers.SongMapper;
 import com.annhienktuit.data.models.SongModel;
 import com.annhienktuit.domain.interfaces.SongDataSource;
@@ -19,7 +20,7 @@ public class RetrofitSongDataSource implements SongDataSource {
 
     private static final String BASE_URL = "https://61a03c9da6470200176132f7.mockapi.io/";
 
-    private final SongMapper<Song, SongModel> mapper = new SongMapper<>();
+    private final Mapper<Song, SongModel> mapper = new SongMapper<>();
 
     @Inject
     public RetrofitSongDataSource(){}
