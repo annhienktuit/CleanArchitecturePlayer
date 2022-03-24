@@ -44,7 +44,7 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
                 .builder()
                 .applicationComponent(application.getApplicationComponent())
                 .build()
-                                                                .inject(this);
+                .inject(this);
 
         presenter.attachView(this);
 

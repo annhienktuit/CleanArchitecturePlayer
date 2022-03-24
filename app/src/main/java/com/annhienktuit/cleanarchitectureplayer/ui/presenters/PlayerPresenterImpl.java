@@ -28,7 +28,7 @@ public class PlayerPresenterImpl implements PlayerPresenter {
 
     @Inject
     @Named("MainThread")
-    AbstractExecutorService mainExecutorService = new MainThreadExecutorService();
+    AbstractExecutorService mainExecutorService;
 
     @Inject
     public PlayerPresenterImpl() {

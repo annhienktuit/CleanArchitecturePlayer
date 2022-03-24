@@ -33,7 +33,6 @@ public class PlayerActivity extends AppCompatActivity implements PlayerView {
     @Inject
     PlayerPresenter presenter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * Created by Nhien Nguyen on 3/22/2022
  */
-public class SongMapper<E, M> implements Mapper<Song, SongModel> {
+public class SongMapper implements Mapper<Song, SongModel> {
 
-    public SongMapper(){};
+    public SongMapper(){}
 
     @Override
     public Song fromModel(SongModel model) {

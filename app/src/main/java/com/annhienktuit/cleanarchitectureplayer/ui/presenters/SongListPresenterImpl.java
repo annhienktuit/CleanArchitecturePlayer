@@ -26,7 +26,7 @@ public class SongListPresenterImpl implements SongListPresenter {
 
     @Inject
     @Named("MainThread")
-    AbstractExecutorService mainExecutorService = new MainThreadExecutorService();
+    AbstractExecutorService mainExecutorService;
 
     @Inject
     public SongListPresenterImpl() { }

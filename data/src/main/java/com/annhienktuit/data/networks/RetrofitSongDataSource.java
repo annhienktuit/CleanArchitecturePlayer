@@ -19,7 +19,7 @@ public class RetrofitSongDataSource implements SongDataSource {
 
     private static final String BASE_URL = "https://61a03c9da6470200176132f7.mockapi.io/";
 
-    private final Mapper<Song, SongModel> mapper = new SongMapper<>();
+    private final Mapper<Song, SongModel> mapper = new SongMapper();
 
     @Inject
     public RetrofitSongDataSource(){}
