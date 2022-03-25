@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.rxjava3.core.Observable;
+
 public class GetSongUseCase {
     @Inject
     SongDataSource songDataSource;
@@ -16,12 +18,11 @@ public class GetSongUseCase {
 
     }
 
-    public Song execute(int id) throws Exception {
+    public Observable<Song> execute(int id) throws Exception {
         return songDataSource.getSong(id);
     }
 
-    public List<Song> executeAll() throws Exception {
+    public Observable<List<Song>> executeAll() throws Exception {
         return songDataSource.getAllSong();
     }
-
 }

@@ -14,6 +14,11 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class SongListPresenterImpl implements SongListPresenter {
     private SongListView songListView;
 
@@ -32,28 +37,28 @@ public class SongListPresenterImpl implements SongListPresenter {
     public SongListPresenterImpl() { }
 
     @Override
-    public void loadSong(){
-        mainExecutorService.execute(() -> {
-            ioExecutorService.execute(() -> {
-                try{
-                    List<Song> songList = getSongUseCase.executeAll();
-                    if(songList != null){
-                        mainExecutorService.execute(() -> {
-                            songListView.showSongList(songList);
-                        });
-                    }
-                    else {
-                        songListView.showNoResultText();
-                        Log.e("Nhiennha ", "List song return null");
-                    }
-                }
-                catch (Exception e){
-                    songListView.showErrorToast("Error while getting data from API");
-                    e.printStackTrace();
-                }
-            });
+    public void loadSong() throws Exception {
 
-        });
+        getSongUseCase.executeAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<List<Song>>() {
+                    @Override
+                    public void onNext(@NonNull List<Song> songs) {
+                        songListView.showSongList(songs);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        songListView.showErrorToast("Error while getting data from API");
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.i("Nhiennha ", "Completed");
+                    }
+                });
     }
 
     @Override

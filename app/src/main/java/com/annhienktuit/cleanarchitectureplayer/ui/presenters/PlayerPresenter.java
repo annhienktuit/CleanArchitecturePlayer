@@ -5,7 +5,7 @@ import com.google.android.exoplayer2.ExoPlayer;
 
 public interface PlayerPresenter {
 
-    void initializeMedia(int id);
+    void initializeMedia(int id) throws Exception;
 
     void startPlay(String url);
 

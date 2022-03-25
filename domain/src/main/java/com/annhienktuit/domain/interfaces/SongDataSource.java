@@ -4,9 +4,12 @@ import com.annhienktuit.domain.models.Song;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+
+
 public interface SongDataSource {
 
-    Song getSong(int id) throws Exception;
+    Observable<Song> getSong(int id) throws Exception;
 
-    List<Song> getAllSong() throws Exception;
+    Observable<List<Song>> getAllSong() throws Exception;
 }

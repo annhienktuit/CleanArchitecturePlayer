@@ -5,7 +5,7 @@ import com.annhienktuit.domain.models.Song;
 
 public interface SongListPresenter {
 
-    void loadSong();
+    void loadSong() throws Exception;
 
     void onSongItemClick(Song song);
 
