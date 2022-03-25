@@ -9,7 +9,7 @@ import com.annhienktuit.domain.interfaces.SongDataSource;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {ExecutorModule.class})
+@Module
 public class AppModule {
 
     private Application application;

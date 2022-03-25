@@ -26,14 +26,6 @@ public class SongListPresenterImpl implements SongListPresenter {
     GetSongUseCase getSongUseCase;
 
     @Inject
-    @Named("IOThread")
-    ExecutorService ioExecutorService;
-
-    @Inject
-    @Named("MainThread")
-    AbstractExecutorService mainExecutorService;
-
-    @Inject
     public SongListPresenterImpl() { }
 
     @Override
@@ -63,9 +55,7 @@ public class SongListPresenterImpl implements SongListPresenter {
 
     @Override
     public void onSongItemClick(Song song){
-        mainExecutorService.execute(() -> {
             songListView.openSong(song);
-        });
     }
 
     @Override

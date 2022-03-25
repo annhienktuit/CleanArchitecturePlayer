@@ -23,13 +23,9 @@ public class PlayerPresenterImpl implements PlayerPresenter {
 
     @Inject
     GetSongUseCase getSongUseCase;
-    @Inject
-    @Named("IOThread")
-    ExecutorService ioExecutorService;
-    @Inject
-    @Named("MainThread")
-    AbstractExecutorService mainExecutorService;
+
     private ExoPlayer exoPlayer;
+
     private PlayerView playerView;
 
     @Inject

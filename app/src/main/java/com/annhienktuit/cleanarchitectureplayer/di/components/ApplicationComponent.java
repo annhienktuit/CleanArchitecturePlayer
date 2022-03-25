@@ -19,10 +19,4 @@ public interface ApplicationComponent {
 
     GetSongUseCase getSongUseCase();
 
-    @Named("IOThread")
-    ExecutorService IoExecutorService();
-
-    @Named("MainThread")
-    AbstractExecutorService mainExecutorService();
-
 }
