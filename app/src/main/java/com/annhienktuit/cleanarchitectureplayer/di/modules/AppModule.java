@@ -12,6 +12,8 @@ import dagger.Provides;
 @Module
 public class AppModule {
 
+    private final String BASE_URL = "https://61a03c9da6470200176132f7.mockapi.io/";
+
     private Application application;
 
     public AppModule(Application app){
