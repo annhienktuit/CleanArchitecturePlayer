@@ -51,7 +51,11 @@ public class SongListActivity extends AppCompatActivity implements SongListView 
         adapter = new SongListAdapter(presenter);
         recyclerViewSongList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerViewSongList.setAdapter(adapter);
-        presenter.loadSong();
+        try {
+            presenter.loadSong();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void attachView() {
