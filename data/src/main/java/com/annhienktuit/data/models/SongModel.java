@@ -1,6 +1,10 @@
 package com.annhienktuit.data.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.util.Objects;
 
 /**
  * Created by Nhien Nguyen on 3/22/2022
@@ -59,4 +63,5 @@ public class SongModel {
     public void setArtist(String artist) {
         this.artist = artist;
     }
+
 }

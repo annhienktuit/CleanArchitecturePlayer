@@ -46,4 +46,5 @@ public class RetrofitSongDataSource implements SongDataSource {
     public Observable<List<Song>> getAllSong() {
         return getSongService.getAllSong().map(mapper::fromModel);
     }
+
 }

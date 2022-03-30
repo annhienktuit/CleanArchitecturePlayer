@@ -14,15 +14,15 @@ public class GetSongUseCase {
     SongDataSource songDataSource;
 
     @Inject
-    public GetSongUseCase(){
+    public GetSongUseCase() {
 
     }
 
-    public Observable<Song> execute(int id) throws Exception {
+    public Observable<Song> execute(int id) {
         return songDataSource.getSong(id);
     }
 
-    public Observable<List<Song>> executeAll() throws Exception {
+    public Observable<List<Song>> executeAll() {
         return songDataSource.getAllSong();
     }
 }

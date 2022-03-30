@@ -1,5 +1,7 @@
 package com.annhienktuit.domain.models;
 
+import java.util.Objects;
+
 public class Song {
     String id;
 
@@ -48,6 +50,19 @@ public class Song {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Song)) return false;
+        Song song = (Song) o;
+        return Objects.equals(getId(), song.getId()) && Objects.equals(getTitle(), song.getTitle()) && Objects.equals(getSongURL(), song.getSongURL()) && Objects.equals(getArtist(), song.getArtist());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getSongURL(), getArtist());
     }
 }
 

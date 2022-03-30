@@ -57,7 +57,7 @@ public class PlayerPresenterImpl implements PlayerPresenter {
     }
 
     @Override
-    public void initializeMedia(int id) throws Exception {
+    public void initializeMedia(int id){
         playerView.showPlayer();
         getSongUseCase.execute(id)
                 .subscribeOn(Schedulers.io())

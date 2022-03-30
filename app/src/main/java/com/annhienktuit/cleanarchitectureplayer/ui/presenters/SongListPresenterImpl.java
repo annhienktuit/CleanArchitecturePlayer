@@ -7,6 +7,7 @@ import com.annhienktuit.domain.models.Song;
 import com.annhienktuit.domain.usecases.GetSongUseCase;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -26,7 +27,7 @@ public class SongListPresenterImpl implements SongListPresenter {
     public SongListPresenterImpl() { }
 
     @Override
-    public void loadSong() throws Exception {
+    public void loadSong(){
 
         getSongUseCase.executeAll()
                 .subscribeOn(Schedulers.io())
